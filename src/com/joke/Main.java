@@ -16,14 +16,12 @@ public class Main {
 		System.out.println("****** DOM Parser start ******");
 
 		DomParser parser = new DomParser();
-
-		List<DomParser.Node> items = parser.findElements(new File("/Users/joke/Downloads/World.xml"), "item");
-
 		List<String> elementNames = new ArrayList<>();
 		elementNames.add("title");
 		elementNames.add("link");
-		parser.printElements(items, elementNames);
+		parser.printElements(new File("/Users/joke/Downloads/World.xml"), "item", elementNames);
 
 		System.out.println("****** DOM Parser end ******");
 	}
+
 }

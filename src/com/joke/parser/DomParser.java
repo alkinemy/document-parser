@@ -28,6 +28,11 @@ public class DomParser implements DocumentParser {
 		return result;
 	}
 
+	public void printElements(File file, String parentElementName, List<String> childElementNames) {
+		List<Node> items = findElements(file, parentElementName);
+		printElements(items, childElementNames);
+	}
+
 	public void printElements(List<Node> nodes, List<String> elementNames) {
 		for(Node node : nodes) {
 			printElement(node, elementNames);
