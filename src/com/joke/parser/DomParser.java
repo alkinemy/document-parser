@@ -8,18 +8,24 @@ public class DomParser implements DocumentParser {
 	//전부 메모리에 읽어서 객체로 만들어놓고 처리하는듯
 	//트리를 미리 만드는듯 -> 트리를 따라가면서 필요한 정보를 얻거나 출력
 
-	public Node findElements(File file, String elementName) {
+	public List<Node> findElements(File file, String elementName) {
 		Node document = parse(file);
 		return findElements(document, elementName);
 	}
 
-	private Node findElements(Node document, String elementName) {
-		return null;
-	}
+	private List<Node> findElements(Node document, String elementName) {
+		List<Node> result = new ArrayList<>();
+		if (elementName.equals(document.getName())) {
+			result.add(document);
+			return result;
+		}
 
-	private String removeLast(String origin, String pattern) {
-		int lastIndex = origin.lastIndexOf(pattern);
-		return origin.substring(0, lastIndex) + origin.substring(lastIndex + pattern.length(), origin.length() - 1);
+		if (document.hasChildren()) {
+			for(Node child : document.getChildren()) {
+				result.addAll(findElements(child, elementName));
+			}
+		}
+		return result;
 	}
 
 	private Node parse(File file) {
@@ -94,6 +100,10 @@ public class DomParser implements DocumentParser {
 
 		public void setChildren(List<Node> children) {
 			this.children = children;
+		}
+
+		public boolean hasChildren() {
+			return children != null && !children.isEmpty();
 		}
 
 		public void addChild(Node node) {
