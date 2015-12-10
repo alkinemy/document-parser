@@ -28,6 +28,24 @@ public class DomParser implements DocumentParser {
 		return result;
 	}
 
+	public void printElements(List<Node> nodes, List<String> elementNames) {
+		for(Node node : nodes) {
+			printElement(node, elementNames);
+		}
+	}
+
+	public void printElement(Node document, List<String> elementNames) {
+		if (elementNames.contains(document.getName())) {
+			System.out.println(document.getName() + ": " + document.getValue());
+		}
+
+		if (document.hasChildren()) {
+			for(Node child : document.getChildren()) {
+				printElement(child, elementNames);
+			}
+		}
+	}
+
 	private Node parse(File file) {
 		Stack<Node> nodes = new Stack<>();
 		nodes.push(new Node("root"));
@@ -119,6 +137,10 @@ public class DomParser implements DocumentParser {
 
 		public String getName() {
 			return element.getName();
+		}
+
+		public String getValue() {
+			return element.getValue();
 		}
 	}
 
